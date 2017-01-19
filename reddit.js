@@ -1,11 +1,27 @@
-var request = require('request');
+var request = require('request-promise');
+var prompt = require('prompt-promise')
 
 /*
 This function should "return" the default homepage posts as an array of objects
 */
-function getHomepage(callback) {
+function getHomepage() {
   // Load reddit.com/.json and call back with the array of posts
+  return request("https://www.reddit.com/.json")
+  .then(function(redditHome) {
+    var redditHomeData = JSON.parse(redditHome);
+    return [redditHomeData];
+  })
 }
+
+getHomepage()
+.then(function(result){
+  console.log(result);
+})
+.catch(function(err){
+  console.log("something went wrong :::" + err);
+})
+
+
 
 /*
 This function should "return" the default homepage posts as an array of objects.
