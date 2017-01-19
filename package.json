@@ -4,7 +4,7 @@
   "description": "Reddit command-line browsing",
   "main": "index.js",
   "dependencies": {
-    "inquirer": "^1.0.2",
+    "inquirer": "^1.2.3",
     "prompt-promise": "^1.0.3",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
