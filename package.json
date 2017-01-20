@@ -4,6 +4,8 @@
   "description": "Reddit command-line browsing",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.4.7",
+    "image-to-ascii": "^3.0.5",
     "inquirer": "^1.2.3",
     "inquirer-promise": "^1.0.0",
     "prompt-promise": "^1.0.3",

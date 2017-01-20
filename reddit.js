@@ -71,11 +71,18 @@ function getSortedHomepage(sorthingMethod) {
       })
   }
 
+  
+  
+  
+  
+  
+  
+
   // Export the API
   module.exports = {
     getSubreddit : getSubreddit, 
     getSortedSubreddit : getSortedSubreddit,
     getSubreddits : getSubreddits,
     getSortedHomepage : getSortedHomepage,
-    getHomepage: getHomepage
+    getHomepage: getHomepage,
   };

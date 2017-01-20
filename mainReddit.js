@@ -1,6 +1,9 @@
 var reddit = require('./reddit');
 var inquirer = require("inquirer");
 var reusableFunc = require("./reusableFunc")
+var bluebird = require("bluebird");
+var imageToAscii = bluebird.promisify(require("image-to-ascii"))
+var request = require("request-promise");
 
 
 
@@ -38,7 +41,20 @@ function initialMenu() {
             else if (choice.menu === 'SUBREDDIT') {
                 return reusableFunc.chosenSubreddit()
                 .then(reddit.getSubreddit)
-                .then(reusableFunc.pageListing);
+                .then(reusableFunc.pageListing)
+                .then(reusableFunc.postList)
+                .then(reusableFunc.postListing)
+                .then(function(result){
+                    var url = "https://www.reddit.com" + result.postListing.permalink + ".json";
+                    return  request(url)
+                })
+                .then(function(x){
+                    var urlJSON = JSON.parse(x);
+                    console.log((urlJSON))
+                    return urlJSON;
+                })
+                .then(reusableFunc.retrieveComments)
+                
             }
             else if (choice.menu === 'SORTEDSUBREDDITS') {
                 return reddit.getSortedSubreddit()
@@ -46,17 +62,22 @@ function initialMenu() {
             else if (choice.menu === 'SUBREDDITS') {
                 return reddit.getSubreddits()
                 .then(reusableFunc.subredditOptions)
-                .then(function(result){
-                    return inquirer.prompt({
-                        type: 'list',
-                        name: 'subredditOption',
-                        message: 'choose a subredddit',
-                        choices: result
+                .then(reusableFunc.getList)
+                .then(x=> x.subredditOption)
+                .then(reddit.getSubreddit)
+                .then(reusableFunc.pageListing)
+                .then(reusableFunc.postList)
+                .then(reusableFunc.postListing)
+                .then(function(choice){
+                    var url = choice.postListing.url;
+                    if (url.endsWith('jpg') || url.endsWith('gif') || url.endsWith('png')){
+                        return reusableFunc.loadImage(url);
+                    }
+                    else{
+                        return choice;
+                    }
+        
                     })
-                    .then(x=> x.subredditOption)
-                    .then(reddit.getSubreddit)
-                    .then(reusableFunc.pageListing)
-                })
             }
             else if (choice.menu === 'SORTEDHOMEPAGE') {
                 return reddit.getSortedHomepage;
@@ -70,6 +91,5 @@ function initialMenu() {
             console.log("Error : " + err)
         })
 }
-
 
 initialMenu();
