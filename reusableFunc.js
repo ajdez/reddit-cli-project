@@ -1,4 +1,4 @@
-var inquirer = require("inquirer-promise");
+var inquirer = require("inquirer");
 
 
 function pageListing(array) {
@@ -14,8 +14,9 @@ function pageListing(array) {
 
 function subredditOptions (array){
     return array.map(function(x){
-        return {display_name : x.data.display_name};
-        
+        return {name : x.data.display_name,
+                value: x.data.display_name.toUpperCase()
+        };
     })
 }
 
@@ -24,11 +25,15 @@ function listOfSubreddit(array){
 }
 
 function chosenSubreddit() {
-    return inquirer.question({
+    return inquirer.prompt({
                 type: "input",
+                name: "subreddit",
                 message: "Choose a subreddit",
                 default: 'montreal'
-            });
+            })
+            .then(function(answers){
+                return answers.subreddit;
+            })
 }
 
 

@@ -1,5 +1,5 @@
 var reddit = require('./reddit');
-var inquirer = require("inquirer-promise");
+var inquirer = require("inquirer");
 var reusableFunc = require("./reusableFunc")
 
 
@@ -42,15 +42,21 @@ function initialMenu() {
             }
             else if (choice.menu === 'SORTEDSUBREDDITS') {
                 return reddit.getSortedSubreddit()
-                    
             }
             else if (choice.menu === 'SUBREDDITS') {
                 return reddit.getSubreddits()
                 .then(reusableFunc.subredditOptions)
                 .then(function(result){
-                    return inquirer.list("what would you look to see?", result)
+                    return inquirer.prompt({
+                        type: 'list',
+                        name: 'subredditOption',
+                        message: 'choose a subredddit',
+                        choices: result
+                    })
+                    .then(x=> x.subredditOption)
+                    .then(reddit.getSubreddit)
+                    .then(reusableFunc.pageListing)
                 })
-               
             }
             else if (choice.menu === 'SORTEDHOMEPAGE') {
                 return reddit.getSortedHomepage;
