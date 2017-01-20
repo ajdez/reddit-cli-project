@@ -12,6 +12,17 @@ function pageListing(array) {
     })
 }
 
+function subredditOptions (array){
+    return array.map(function(x){
+        return {display_name : x.data.display_name};
+        
+    })
+}
+
+function listOfSubreddit(array){
+    return inquirer.list("what would you look to see?", array )
+}
+
 function chosenSubreddit() {
     return inquirer.question({
                 type: "input",
@@ -23,5 +34,7 @@ function chosenSubreddit() {
 
     module.exports = {
         pageListing: pageListing,
-        chosenSubreddit: chosenSubreddit
+        chosenSubreddit: chosenSubreddit,
+        subredditOptions: subredditOptions,
+        listOfSubreddit: listOfSubreddit
     }

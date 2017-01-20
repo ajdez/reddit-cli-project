@@ -75,7 +75,7 @@ function getSortedHomepage(sorthingMethod) {
   module.exports = {
     getSubreddit : getSubreddit, 
     getSortedSubreddit : getSortedSubreddit,
-    getSubreddit : getSubreddit,
+    getSubreddits : getSubreddits,
     getSortedHomepage : getSortedHomepage,
     getHomepage: getHomepage
   };

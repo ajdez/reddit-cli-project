@@ -41,10 +41,16 @@ function initialMenu() {
                 .then(reusableFunc.pageListing);
             }
             else if (choice.menu === 'SORTEDSUBREDDITS') {
-                return reddit.getSortedSubreddit
+                return reddit.getSortedSubreddit()
+                    
             }
             else if (choice.menu === 'SUBREDDITS') {
-                return reddit.getSubreddits;
+                return reddit.getSubreddits()
+                .then(reusableFunc.subredditOptions)
+                .then(function(result){
+                    return inquirer.list("what would you look to see?", result)
+                })
+               
             }
             else if (choice.menu === 'SORTEDHOMEPAGE') {
                 return reddit.getSortedHomepage;
@@ -52,12 +58,11 @@ function initialMenu() {
         })
         .then(function(result) {
             console.log(result);
-            initialMenu();
         })
+        .then(initialMenu)
         .catch(function(err) {
             console.log("Error : " + err)
         })
-
 }
 
 
