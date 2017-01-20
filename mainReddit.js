@@ -33,35 +33,31 @@ function initialMenu() {
         }).then(function(choice) {
             if (choice.menu === 'HOMEPAGE') {
                 return reddit.getHomepage()
-                .then(reusableFunc.homePageListing)
+                    .then(reusableFunc.pageListing)
+            }
+            else if (choice.menu === 'SUBREDDIT') {
+                return reusableFunc.chosenSubreddit()
+                .then(reddit.getSubreddit)
+                .then(reusableFunc.pageListing);
+            }
+            else if (choice.menu === 'SORTEDSUBREDDITS') {
+                return reddit.getSortedSubreddit
+            }
+            else if (choice.menu === 'SUBREDDITS') {
+                return reddit.getSubreddits;
+            }
+            else if (choice.menu === 'SORTEDHOMEPAGE') {
+                return reddit.getSortedHomepage;
             }
         })
         .then(function(result) {
             console.log(result);
             initialMenu();
         })
+        .catch(function(err) {
+            console.log("Error : " + err)
+        })
 
-
-    //votes: ups, url: url , username: author, title:title
-    /*
-    }
-    else if (choice.menu === 'SUBREDDIT') {
-        return reddit.getSubreddit()
-    }
-    else if (choice.menu === 'SORTEDSUBREDDITS') {
-        return reddit.getSortedSubreddit
-    }
-    else if (choice.menu === 'SUBREDDITS') {
-        return reddit.getSubreddits;
-    }
-    else if (choice.menu === 'SORTEDHOMEPAGE') {
-        return reddit.getSortedHomepage;
-    }
-    })
-    .catch(function(err) {
-        console.log("Error : " + err)
-    })
-    */
 }
 
 

@@ -1,4 +1,7 @@
-function homePageListing(array) {
+var inquirer = require("inquirer-promise");
+
+
+function pageListing(array) {
     return array.map(function(x) {
         return {
             username: x.data.author,
@@ -9,8 +12,16 @@ function homePageListing(array) {
     })
 }
 
-
-
-module.exports = {
-    homePageListing: homePageListing
+function chosenSubreddit() {
+    return inquirer.question({
+                type: "input",
+                message: "Choose a subreddit",
+                default: 'montreal'
+            });
 }
+
+
+    module.exports = {
+        pageListing: pageListing,
+        chosenSubreddit: chosenSubreddit
+    }

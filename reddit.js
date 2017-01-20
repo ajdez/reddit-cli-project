@@ -23,7 +23,7 @@ In contrast to the `getHomepage` function, this one accepts a `sortingMethod` pa
 function getSortedHomepage(sorthingMethod) {
   // Load reddit.com/{sortingMethod}.json and call back with the array of posts
   // Check if the sorting method is valid based on the various Reddit sorting methods
-  return request("reddit.com/" + sorthingMethod + ".json")
+  return request("https://www.reddit.com/" + sorthingMethod + ".json")
     .then(function(urlSorted) {
       var urlData = JSON.parse(urlSorted);
       return urlData.data.children;
@@ -35,7 +35,7 @@ function getSortedHomepage(sorthingMethod) {
   */
   function getSubreddit(subreddit) {
     // Load reddit.com/r/{subreddit}.json and call back with the array of 
-    return request("reddit.com/r/" + subreddit + ".json")
+    return request("https://www.reddit.com/r/" + subreddit + ".json")
       .then(function(urlSubreddit) {
         var subData = JSON.parse(urlSubreddit);
         return subData.data.children;
@@ -51,7 +51,7 @@ function getSortedHomepage(sorthingMethod) {
   function getSortedSubreddit(subreddit, sortingMethod) {
     // Load reddit.com/r/{subreddit}/{sortingMethod}.json and call back with the array of posts
     // Check if the sorting method is valid based on the various Reddit sorting methods
-    return request("reddit.com/r/" + subreddit + "/" + sortingMethod + ".json")
+    return request("https://www.reddit.com/r/" + subreddit + "/" + sortingMethod + ".json")
       .then(function(url) {
         var subSortData = JSON.parse(url);
         return subSortData.data.children;
@@ -64,7 +64,7 @@ function getSortedHomepage(sorthingMethod) {
 
   function getSubreddits() {
     // Load reddit.com/subreddits.json and call back with an array of subreddits
-    return request("reddit.com/subreddits.json")
+    return request("https://www.reddit.com/subreddits.json")
       .then(function(url) {
         var subData = JSON.parse(url);
         return subData.data.children;
