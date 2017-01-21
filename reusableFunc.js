@@ -2,6 +2,7 @@ var inquirer = require("inquirer");
 var bluebird = require("bluebird");
 var request = require("request");
 var imageToAscii = bluebird.promisify(require("image-to-ascii"))
+var wordWrap = require("word-wrap")
 
 
 function pageListing(array) {
@@ -82,11 +83,26 @@ function getURL(chosenItem) {
         })
 }
 
-  
-  function retrieveComments(array){
-      console.log(array);
-    //array.map(function)
-    
+function formatArray (array){
+    // console.log(array);
+    var goodArray = array[1].data.children;
+    // console.dir(goodArray, {depth: null})
+    return goodArray;
+    //.map(x => x.data.children);
+}
+
+
+  //[].data.children
+  function retrieveComments(children){
+    //   console.log("the children : " , children[1])
+    return children.map(function(result){
+        //console.log(result)
+        return {
+            username: result.data.author,
+            comment:  result.data.body,
+            replies: result.data.replies ? result.data.replies.data ? retrieveComments(result.data.replies.data.children) : "no replies" : " no replies"
+        }
+    })
   }
 
 
@@ -100,6 +116,6 @@ module.exports = {
     loadImage: loadImage,
     getList, getList,
     getURL: getURL,
-    retrieveComments: retrieveComments
-
+    retrieveComments: retrieveComments,
+    formatArray: formatArray
 }

@@ -4,6 +4,7 @@ var reusableFunc = require("./reusableFunc")
 var bluebird = require("bluebird");
 var imageToAscii = bluebird.promisify(require("image-to-ascii"))
 var request = require("request-promise");
+var wordWrap = require("word-wrap")
 
 
 
@@ -24,7 +25,6 @@ function initialMenu() {
             name: 'Show sorted homepage',
             value: 'SORTEDHOMEPAGE'
         }
-
     ];
 
 
@@ -50,10 +50,13 @@ function initialMenu() {
                 })
                 .then(function(x){
                     var urlJSON = JSON.parse(x);
-                    console.log((urlJSON))
                     return urlJSON;
                 })
+                .then(reusableFunc.formatArray)
                 .then(reusableFunc.retrieveComments)
+               
+                
+                
                 
             }
             else if (choice.menu === 'SORTEDSUBREDDITS') {
